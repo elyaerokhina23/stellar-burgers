@@ -3,6 +3,8 @@ import { ResetPasswordUI } from '@ui-pages';
 import { type SyntheticEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { resetPasswordKey } from '@utils/storage-keys';
+
 export const ResetPassword = (): React.JSX.Element => {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
@@ -15,14 +17,14 @@ export const ResetPassword = (): React.JSX.Element => {
     setError(null);
     void resetPasswordApi({ password, token })
       .then(() => {
-        localStorage.removeItem('resetPassword');
+        localStorage.removeItem(resetPasswordKey);
         void navigate('/login');
       })
       .catch((err: Error) => setError(err));
   };
 
   useEffect(() => {
-    if (!localStorage.getItem('resetPassword')) {
+    if (!localStorage.getItem(resetPasswordKey)) {
       void navigate('/forgot-password', { replace: true });
     }
   }, [navigate]);

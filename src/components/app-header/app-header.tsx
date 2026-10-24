@@ -1,8 +1,12 @@
+import { selectUser } from '@selectors';
 import { AppHeaderUI } from '@ui';
+import { useLocation } from 'react-router-dom';
+
+import { useSelector } from '@services/store';
 
 export const AppHeader = (): React.JSX.Element => {
-  /* TODO: Получите имя пользователя из хранилища */
-  const userName = undefined;
+  const user = useSelector(selectUser);
+  const { pathname } = useLocation();
 
-  return <AppHeaderUI userName={userName} />;
+  return <AppHeaderUI userName={user?.name} pathname={pathname} />;
 };
