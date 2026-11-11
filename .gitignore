@@ -33,3 +33,9 @@ test-results
 .env
 .env.local
 .env.*.local
+
+# tests
+coverage
+cypress/screenshots
+cypress/videos
+cypress/downloads

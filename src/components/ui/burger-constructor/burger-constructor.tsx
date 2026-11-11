@@ -20,9 +20,9 @@ export const BurgerConstructorUI = ({
   onOrderClick,
   closeOrderModal,
 }: BurgerConstructorUIProps): React.JSX.Element => (
-  <section className={styles.burger_constructor}>
+  <section className={styles.burger_constructor} data-cy="burger-constructor">
     {constructorItems.bun ? (
-      <div className={clsx(styles.element, 'mb-4 mr-4')}>
+      <div className={clsx(styles.element, 'mb-4 mr-4')} data-cy="constructor-bun-top">
         <ConstructorElement
           type="top"
           isLocked
@@ -42,7 +42,7 @@ export const BurgerConstructorUI = ({
         Выберите булки
       </div>
     )}
-    <ul className={styles.elements}>
+    <ul className={styles.elements} data-cy="constructor-ingredients">
       {constructorItems.ingredients.length > 0 ? (
         constructorItems.ingredients.map(
           (item: TConstructorIngredient, index: number) => (
@@ -63,7 +63,10 @@ export const BurgerConstructorUI = ({
       )}
     </ul>
     {constructorItems.bun ? (
-      <div className={clsx(styles.element, 'mt-4 mr-4')}>
+      <div
+        className={clsx(styles.element, 'mt-4 mr-4')}
+        data-cy="constructor-bun-bottom"
+      >
         <ConstructorElement
           type="bottom"
           isLocked
