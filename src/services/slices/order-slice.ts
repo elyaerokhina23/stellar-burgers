@@ -31,7 +31,7 @@ export const orderBurger = createAsyncThunk(
 
 export const fetchOrderByNumber = createAsyncThunk(
   'order/fetchByNumber',
-  async (orderNumber: number) => {
+  async (orderNumber: number): Promise<TOrder | null> => {
     const response = await getOrderByNumberApi(orderNumber);
     return response.orders[0] ?? null;
   }
