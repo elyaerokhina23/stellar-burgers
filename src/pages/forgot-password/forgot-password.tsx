@@ -3,6 +3,8 @@ import { ForgotPasswordUI } from '@ui-pages';
 import { useState, type SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { resetPasswordKey } from '@utils/storage-keys';
+
 export const ForgotPassword = (): React.JSX.Element => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState<Error | null>(null);
@@ -15,7 +17,7 @@ export const ForgotPassword = (): React.JSX.Element => {
     setError(null);
     void forgotPasswordApi({ email })
       .then(() => {
-        localStorage.setItem('resetPassword', 'true');
+        localStorage.setItem(resetPasswordKey, 'true');
         void navigate('/reset-password', { replace: true });
       })
       .catch((err: Error) => setError(err));

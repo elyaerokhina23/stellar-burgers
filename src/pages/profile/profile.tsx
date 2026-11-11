@@ -1,41 +1,64 @@
+import { selectUser, selectUserRequestError } from '@selectors';
+import { clearRequestError, updateUser } from '@slices/user-slice';
 import { ProfileUI } from '@ui-pages';
 import { type SyntheticEvent, useEffect, useState } from 'react';
 
+import { useDispatch, useSelector } from '@services/store';
+
+import type { TRegisterData } from '@api';
+
 export const Profile = (): React.JSX.Element => {
-  /** TODO: Взять переменную из стора */
-  const user = {
-    name: '',
-    email: '',
-  };
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const requestError = useSelector(selectUserRequestError);
+  const userName = user?.name ?? '';
+  const userEmail = user?.email ?? '';
 
   const [formValue, setFormValue] = useState({
-    name: user.name,
-    email: user.email,
+    name: userName,
+    email: userEmail,
     password: '',
   });
 
   useEffect(() => {
+    dispatch(clearRequestError());
+  }, [dispatch]);
+
+  useEffect(() => {
     setFormValue((prevState) => ({
       ...prevState,
-      name: user?.name || '',
-      email: user?.email || '',
+      name: userName,
+      email: userEmail,
+      password: '',
     }));
-  }, [user]);
+  }, [userName, userEmail]);
 
   const isFormChanged =
-    formValue.name !== user?.name ||
-    formValue.email !== user?.email ||
-    !!formValue.password;
+    formValue.name !== userName || formValue.email !== userEmail || !!formValue.password;
 
   const handleSubmit = (e: SyntheticEvent): void => {
     e.preventDefault();
+
+    const changedData: Partial<TRegisterData> = {
+      name: formValue.name,
+      email: formValue.email,
+    };
+    if (formValue.password) {
+      changedData.password = formValue.password;
+    }
+
+    void dispatch(updateUser(changedData)).then((result) => {
+      if (updateUser.fulfilled.match(result)) {
+        setFormValue((prevState) => ({ ...prevState, password: '' }));
+      }
+    });
   };
 
   const handleCancel = (e: SyntheticEvent): void => {
     e.preventDefault();
     setFormValue({
-      name: user.name,
-      email: user.email,
+      name: userName,
+      email: userEmail,
       password: '',
     });
   };
@@ -54,6 +77,7 @@ export const Profile = (): React.JSX.Element => {
       handleCancel={handleCancel}
       handleSubmit={handleSubmit}
       handleInputChange={handleInputChange}
+      updateUserError={requestError?.message}
     />
   );
 };
