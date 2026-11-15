@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "name": "Краторный био-марсианский spicy бургер",
+  "order": {
+    "_id": "6740a1b2c3f7b9001cfa1234",
+    "ingredients": [
+      "643d69a5c3f7b9001cfa093c",
+      "643d69a5c3f7b9001cfa0941",
+      "643d69a5c3f7b9001cfa0942",
+      "643d69a5c3f7b9001cfa093c"
+    ],
+    "status": "done",
+    "name": "Краторный био-марсианский spicy бургер",
+    "createdAt": "2026-11-11T10:00:00.000Z",
+    "updatedAt": "2026-11-11T10:00:05.000Z",
+    "number": 98765
+  }
+}

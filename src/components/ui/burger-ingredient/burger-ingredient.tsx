@@ -20,7 +20,7 @@ export const BurgerIngredientUI = memo(function BurgerIngredientUI({
   const { image, price, name, _id } = ingredient;
 
   return (
-    <li className={styles.container}>
+    <li className={styles.container} data-cy={`ingredient-${_id}`}>
       <Link className={styles.article} to={`/ingredients/${_id}`} state={locationState}>
         {count && <Counter count={count} />}
         <img src={image} alt="картинка ингредиента." />
@@ -33,7 +33,7 @@ export const BurgerIngredientUI = memo(function BurgerIngredientUI({
       <AddButton
         text="Добавить"
         onClick={handleAdd}
-        extraClass={`${styles.addButton} mt-8`}
+        extraClass={clsx(styles.addButton, 'mt-8')}
       />
     </li>
   );
